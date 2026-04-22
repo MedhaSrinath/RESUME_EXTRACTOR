@@ -6,7 +6,11 @@ st.title("🧠 Resume Skill Extractor")
 uploaded_file = st.file_uploader("Upload your resume (PDF)", type=["pdf"])
 
 if uploaded_file:
-    text = extract_text_from_pdf(uploaded_file)
+    try:
+        text = extract_text_from_pdf(uploaded_file)
+    except ValueError:
+        st.error("Please enter a valid file type.")
+        st.stop()
 
     found_skills, missing_skills = analyze_skills(text)
 

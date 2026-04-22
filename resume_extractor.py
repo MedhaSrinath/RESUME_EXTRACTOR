@@ -1,7 +1,12 @@
 from PyPDF2 import PdfReader
+from PyPDF2.errors import PdfReadError
 
 def extract_text_from_pdf(uploaded_file):
-    reader = PdfReader(uploaded_file)
+    try:
+        reader = PdfReader(uploaded_file)
+    except PdfReadError as exc:
+        raise ValueError("Please enter a valid PDF file.") from exc
+
     text = ""
 
     for page in reader.pages:
